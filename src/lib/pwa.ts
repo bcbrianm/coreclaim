@@ -6,7 +6,7 @@ function refused(): boolean {
   if (!import.meta.env.PROD) return true;
   if (window.self !== window.top) return true;
   const host = window.location.hostname.toLowerCase();
-  const label = host.split(".")[0];
+  const label = host.split(".")[0] ?? "";
   if (LOVABLE_HOSTS.some((h) => host.endsWith(h)) && PREVIEW_LABEL.test(label)) return true;
   if (host === "id-preview--56ec43aa-7994-5cd8-a276-bf3ef54cd903.lovable.app") return true;
   if (/^project--[a-z0-9-]+-dev\.(lovable\.app|gpt-eng\.com|gptengineer\.run)$/.test(host)) return true;

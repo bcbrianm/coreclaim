@@ -16,7 +16,7 @@ import { ProGate } from "@/components/app/ProGate";
 import { EvidencePreview } from "@/components/app/EvidencePreview";
 
 export const Route = createFileRoute("/_authenticated/app/warranty")({
-  validateSearch: (s: Record<string, unknown>): { core?: string } => ({ core: typeof s.core === "string" ? s.core : undefined }),
+  validateSearch: (s: Record<string, unknown>): { core?: string } => (typeof s["core"] === "string" ? { core: s["core"] } : {}),
   component: () => <ProGate feature="Warranty Claims"><Warranty /></ProGate>,
 });
 
@@ -42,7 +42,7 @@ function Warranty() {
   const parent = cores.data?.find((c) => c.id === parentId);
 
   async function save(e: React.FormEvent) {
-    e.preventDefault(); if (!shop || !core) return toast.error("Pick a core");
+    e.preventDefault(); if (!shop || !core) { toast.error("Pick a core"); return; }
     setBusy(true);
     try {
       if (parentId) await supabase.from("cores").update({ parent_core_id: parentId }).eq("id", core.id);
@@ -60,7 +60,7 @@ function Warranty() {
   async function advance(c: { id: string; core_id: string; status: string }) {
     const next = NEXT[c.status]; if (!next || !shop) return;
     const { error } = await supabase.from("warranty_claims").update({ status: next }).eq("id", c.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await supabase.from("core_events").insert({ core_id: c.core_id, shop_id: shop.id, actor_member_id: activeMember?.id ?? null, event_type: "WARRANTY_CLAIM_STATUS_UPDATED", metadata_json: { claim_id: c.id, from: c.status, to: next } });
     qc.invalidateQueries({ queryKey: ["claims"] });
   }
@@ -94,7 +94,7 @@ function Warranty() {
             <summary className="flex cursor-pointer flex-wrap items-center gap-3">
               <span className="font-display text-xl">#{c.cores?.short_code}</span><span className="text-sm">{c.cores?.part_number}</span><span className="text-sm">{money(c.total_claim_amount)}</span>
               <span className="ml-auto rounded bg-secondary px-2 py-0.5 text-xs font-bold">{c.status}</span>
-              {NEXT[c.status] && !ro && <Button size="sm" variant="secondary" onClick={(e) => { e.preventDefault(); void advance(c); }}>Mark {NEXT[c.status].toLowerCase()}</Button>}
+              {NEXT[c.status] && !ro && <Button size="sm" variant="secondary" onClick={(e) => { e.preventDefault(); void advance(c); }}>Mark {(NEXT[c.status] ?? "").toLowerCase()}</Button>}
             </summary>
             <div className="mt-3"><EvidencePreview path={c.claim_pdf_url} label="claim PDF" /></div>
           </details>

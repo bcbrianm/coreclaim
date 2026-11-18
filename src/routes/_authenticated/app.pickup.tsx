@@ -46,12 +46,12 @@ function NewPickup() {
   const items = bin.data ?? [];
 
   async function complete() {
-    if (!shop || !sel.size) return toast.error("Select at least one core");
+    if (!shop || !sel.size) { toast.error("Select at least one core"); return; }
     const signature = refused || sig.current?.isEmpty() ? null : sig.current!.getCanvas().toDataURL("image/png");
-    if (!signature && !refused) return toast.error("Get the driver's signature or mark refused");
+    if (!signature && !refused) { toast.error("Get the driver's signature or mark refused"); return; }
     setBusy(true);
     try {
-      const { data: manifestId, error } = await supabase.rpc("complete_driver_pickup", { p_shop_id: shop.id, p_supplier_id: supplierId, p_core_ids: [...sel], p_driver_name: refused ? "" : driver, p_driver_truck_number: truck, p_actor_member_id: activeMember?.id ?? undefined });
+      const { data: manifestId, error } = await supabase.rpc("complete_driver_pickup", { p_shop_id: shop.id, p_supplier_id: supplierId, p_core_ids: [...sel], p_driver_name: refused ? "" : driver, p_driver_truck_number: truck, ...(activeMember ? { p_actor_member_id: activeMember.id } : {}) });
       if (error) throw error;
       const cores = items.filter((c) => sel.has(c.id));
       const pdf = await buildManifestPdf({ shopName: shop.name, supplierName: sup.data?.find((s) => s.id === supplierId)?.name ?? "", driverName: refused || !driver ? "Driver Refused Signature" : driver, truck, manifestId: manifestId as string, cores, signature });

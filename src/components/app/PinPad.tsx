@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Delete } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function PinPad({ length = 4, onComplete, busy, label }: { length?: number; onComplete: (pin: string) => void | Promise<void>; busy?: boolean; label?: string }) {
+export function PinPad({ length = 4, onComplete, busy, label }: { length?: number; onComplete: (pin: string) => unknown; busy?: boolean; label?: string }) {
   const [pin, setPin] = useState("");
   useEffect(() => {
     if (pin.length === length) { const p = pin; setPin(""); void onComplete(p); }

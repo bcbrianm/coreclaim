@@ -71,7 +71,7 @@ function Gate() {
     <Center><div className="text-center"><h2 className="mb-2 text-4xl">Set your PIN</h2><p className="mb-6 text-muted-foreground">Pick a 4-digit PIN for fast switching on shared tablets.</p>
       <PinPad onComplete={async (pin) => {
         const { error } = await supabase.rpc("set_shop_member_pin", { target_member_id: myMember.id, new_pin: pin });
-        if (error) return toast.error(error.message);
+        if (error) { toast.error(error.message); return; }
         s.setActiveMember(myMember); qc.invalidateQueries({ queryKey: ["pin-status"] }); toast.success("PIN saved");
       }} /></div></Center>
   );

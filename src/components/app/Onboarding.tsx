@@ -16,7 +16,7 @@ export function OnboardingForm({ onCreated, title = "Set up your shop" }: { onCr
     e.preventDefault(); setBusy(true);
     const { data, error } = await supabase.rpc("create_shop_workspace", { shop_name: f.name, shop_phone: f.phone, shop_timezone: f.tz, owner_full_name: f.owner, owner_pin: f.pin });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await refresh(); setShopId(data as string); onCreated?.(data as string);
     toast.success("Shop created. Your 14-day free trial has started.");
   }

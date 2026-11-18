@@ -16,13 +16,13 @@ import { PrintLabelButton } from "@/components/app/QrLabel";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/_authenticated/app/intake")({
-  validateSearch: (s: Record<string, unknown>): { mode?: "invoice" | "audit" } => ({ mode: s.mode === "audit" ? "audit" : s.mode === "invoice" ? "invoice" : undefined }),
+  validateSearch: (s: Record<string, unknown>): { mode?: "invoice" | "audit" } => (s["mode"] === "audit" || s["mode"] === "invoice" ? { mode: s["mode"] } : {}),
   component: Intake,
 });
 
 type Line = { part_number: string; part_description: string; qty: number; part_cost: string; expected_core_amount: string; return_type: "CORE_EXCHANGE" | "UNUSED_PART_RMA" };
 const blank = (): Line => ({ part_number: "", part_description: "", qty: 1, part_cost: "", expected_core_amount: "", return_type: "CORE_EXCHANGE" });
-type Created = Tables<"cores"> & { supplier_name?: string };
+type Created = Tables<"cores"> & { supplier_name?: string | undefined };
 
 function Intake() {
   const { mode } = Route.useSearch();
@@ -49,7 +49,7 @@ function InvoiceForm() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!shop || !h.supplier_id) return toast.error("Pick a supplier");
+    if (!shop || !h.supplier_id) { toast.error("Pick a supplier"); return; }
     setBusy(true);
     try {
       const path = file ? await uploadEvidence(shop.id, "invoices", file) : null;
@@ -119,7 +119,7 @@ function AuditForm() {
     e.preventDefault(); if (!shop) return; setBusy(true);
     const { data, error } = await supabase.from("cores").insert({ shop_id: shop.id, supplier_id: f.supplier_id, created_by_member_id: activeMember?.id ?? null, is_backroom_audit: true, part_number: f.part_number, part_description: f.part_description || null, expected_core_amount: Number(f.expected_core_amount || 0), current_status: "IN_RETURN_BIN" }).select().single();
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setCreated([{ ...data, supplier_name: sup.data?.find((s) => s.id === f.supplier_id)?.name }, ...created]);
     setF({ ...f, part_number: "", part_description: "", expected_core_amount: "" }); qc.invalidateQueries({ queryKey: ["cores"] });
   }

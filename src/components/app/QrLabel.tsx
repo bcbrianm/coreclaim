@@ -5,7 +5,7 @@ import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { qrValue } from "@/lib/coreclaim";
 
-export type LabelCore = { short_code: string; part_number: string; supplier_name?: string | null; return_deadline: string | null };
+export type LabelCore = { short_code: string; part_number: string; supplier_name?: string | null | undefined; return_deadline: string | null };
 
 export function PrintLabelButton({ core, size = "sm" }: { core: LabelCore; size?: "sm" | "default" | "lg" }) {
   const [show, setShow] = useState(false);

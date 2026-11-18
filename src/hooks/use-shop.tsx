@@ -48,7 +48,7 @@ export function ShopProvider({ userId, email, children }: { userId: string; emai
     if (!shops.length) return;
     const stored = sessionStorage.getItem(SHOP_KEY) ?? localStorage.getItem(SHOP_KEY);
     const pick = shops.find((s) => s.id === (shopId ?? stored)) ?? shops[0];
-    if (pick.id !== shopId) setShopIdState(pick.id);
+    if (pick && pick.id !== shopId) setShopIdState(pick.id);
   }, [shops, shopId]);
 
   const shop = shops.find((s) => s.id === shopId) ?? null;

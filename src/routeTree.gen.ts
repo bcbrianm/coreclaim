@@ -15,9 +15,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppAdminRouteImport } from './routes/_authenticated/app.admin'
 import { Route as AuthenticatedAppIntakeRouteImport } from './routes/_authenticated/app.intake'
 import { Route as AuthenticatedAppPickupRouteImport } from './routes/_authenticated/app.pickup'
 import { Route as AuthenticatedAppScanRouteImport } from './routes/_authenticated/app.scan'
+import { Route as AuthenticatedAppStatementsRouteImport } from './routes/_authenticated/app.statements'
+import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
 import { Route as AuthenticatedAppWarrantyRouteImport } from './routes/_authenticated/app.warranty'
 
 const IndexRoute = IndexRouteImport.update({
@@ -49,6 +52,11 @@ const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppAdminRoute = AuthenticatedAppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppIntakeRoute = AuthenticatedAppIntakeRouteImport.update({
   id: '/intake',
   path: '/intake',
@@ -64,6 +72,18 @@ const AuthenticatedAppScanRoute = AuthenticatedAppScanRouteImport.update({
   path: '/scan',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppStatementsRoute =
+  AuthenticatedAppStatementsRouteImport.update({
+    id: '/statements',
+    path: '/statements',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppSuppliersRoute =
+  AuthenticatedAppSuppliersRouteImport.update({
+    id: '/suppliers',
+    path: '/suppliers',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppWarrantyRoute =
   AuthenticatedAppWarrantyRouteImport.update({
     id: '/warranty',
@@ -76,9 +96,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/admin': typeof AuthenticatedAppAdminRoute
   '/app/intake': typeof AuthenticatedAppIntakeRoute
   '/app/pickup': typeof AuthenticatedAppPickupRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
+  '/app/statements': typeof AuthenticatedAppStatementsRoute
+  '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warranty': typeof AuthenticatedAppWarrantyRoute
   '/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -86,9 +109,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/app/admin': typeof AuthenticatedAppAdminRoute
   '/app/intake': typeof AuthenticatedAppIntakeRoute
   '/app/pickup': typeof AuthenticatedAppPickupRoute
   '/app/scan': typeof AuthenticatedAppScanRoute
+  '/app/statements': typeof AuthenticatedAppStatementsRoute
+  '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warranty': typeof AuthenticatedAppWarrantyRoute
   '/app': typeof AuthenticatedAppIndexRoute
 }
@@ -99,9 +125,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/admin': typeof AuthenticatedAppAdminRoute
   '/_authenticated/app/intake': typeof AuthenticatedAppIntakeRoute
   '/_authenticated/app/pickup': typeof AuthenticatedAppPickupRoute
   '/_authenticated/app/scan': typeof AuthenticatedAppScanRoute
+  '/_authenticated/app/statements': typeof AuthenticatedAppStatementsRoute
+  '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/_authenticated/app/warranty': typeof AuthenticatedAppWarrantyRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -112,9 +141,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/app'
+    | '/app/admin'
     | '/app/intake'
     | '/app/pickup'
     | '/app/scan'
+    | '/app/statements'
+    | '/app/suppliers'
     | '/app/warranty'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -122,9 +154,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
+    | '/app/admin'
     | '/app/intake'
     | '/app/pickup'
     | '/app/scan'
+    | '/app/statements'
+    | '/app/suppliers'
     | '/app/warranty'
     | '/app'
   id:
@@ -134,9 +169,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/app'
+    | '/_authenticated/app/admin'
     | '/_authenticated/app/intake'
     | '/_authenticated/app/pickup'
     | '/_authenticated/app/scan'
+    | '/_authenticated/app/statements'
+    | '/_authenticated/app/suppliers'
     | '/_authenticated/app/warranty'
     | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
@@ -192,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/admin': {
+      id: '/_authenticated/app/admin'
+      path: '/admin'
+      fullPath: '/app/admin'
+      preLoaderRoute: typeof AuthenticatedAppAdminRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/intake': {
       id: '/_authenticated/app/intake'
       path: '/intake'
@@ -213,6 +258,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppScanRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/statements': {
+      id: '/_authenticated/app/statements'
+      path: '/statements'
+      fullPath: '/app/statements'
+      preLoaderRoute: typeof AuthenticatedAppStatementsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/suppliers': {
+      id: '/_authenticated/app/suppliers'
+      path: '/suppliers'
+      fullPath: '/app/suppliers'
+      preLoaderRoute: typeof AuthenticatedAppSuppliersRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/warranty': {
       id: '/_authenticated/app/warranty'
       path: '/warranty'
@@ -224,17 +283,23 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAdminRoute: typeof AuthenticatedAppAdminRoute
   AuthenticatedAppIntakeRoute: typeof AuthenticatedAppIntakeRoute
   AuthenticatedAppPickupRoute: typeof AuthenticatedAppPickupRoute
   AuthenticatedAppScanRoute: typeof AuthenticatedAppScanRoute
+  AuthenticatedAppStatementsRoute: typeof AuthenticatedAppStatementsRoute
+  AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
   AuthenticatedAppWarrantyRoute: typeof AuthenticatedAppWarrantyRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAdminRoute: AuthenticatedAppAdminRoute,
   AuthenticatedAppIntakeRoute: AuthenticatedAppIntakeRoute,
   AuthenticatedAppPickupRoute: AuthenticatedAppPickupRoute,
   AuthenticatedAppScanRoute: AuthenticatedAppScanRoute,
+  AuthenticatedAppStatementsRoute: AuthenticatedAppStatementsRoute,
+  AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
   AuthenticatedAppWarrantyRoute: AuthenticatedAppWarrantyRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }

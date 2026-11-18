@@ -17,8 +17,8 @@ export function OperatorSwitch({ onDone }: { onDone?: () => void }) {
     setBusy(true);
     const { data, error } = await supabase.rpc("verify_shop_pin", { target_member_id: sel.id, raw_pin: pin });
     setBusy(false);
-    if (error) return toast.error(error.message);
-    if (!data) return toast.error("Wrong PIN");
+    if (error) { toast.error(error.message); return; }
+    if (!data) { toast.error("Wrong PIN"); return; }
     setActiveMember(sel); setSel(null); onDone?.();
   }
 

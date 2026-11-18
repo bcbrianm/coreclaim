@@ -10,11 +10,11 @@ import { Logo } from "@/components/app/Logo";
 type Search = { redirect?: string; invite?: string; email?: string };
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>): Search => ({
-    redirect: typeof s.redirect === "string" ? s.redirect : undefined,
-    invite: typeof s.invite === "string" ? s.invite : undefined,
-    email: typeof s.email === "string" ? s.email : undefined,
-  }),
+  validateSearch: (s: Record<string, unknown>): Search => {
+    const out: Search = {};
+    for (const k of ["redirect", "invite", "email"] as const) { const v = s[k]; if (typeof v === "string") out[k] = v; }
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Sign in — CoreClaim" },
