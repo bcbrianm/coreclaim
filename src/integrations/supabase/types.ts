@@ -14,6 +14,419 @@ export type Database = {
   }
   public: {
     Tables: {
+      core_credit_allocations: {
+        Row: {
+          allocated_amount: number
+          core_id: string
+          created_at: string
+          id: string
+          shop_id: string
+          statement_line_id: string
+        }
+        Insert: {
+          allocated_amount: number
+          core_id: string
+          created_at?: string
+          id?: string
+          shop_id: string
+          statement_line_id: string
+        }
+        Update: {
+          allocated_amount?: number
+          core_id?: string
+          created_at?: string
+          id?: string
+          shop_id?: string
+          statement_line_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "core_credit_allocations_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "cores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_credit_allocations_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "mechanic_cores_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_credit_allocations_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_credit_allocations_statement_line_id_fkey"
+            columns: ["statement_line_id"]
+            isOneToOne: false
+            referencedRelation: "statement_lines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      core_events: {
+        Row: {
+          actor_member_id: string | null
+          actor_type: string
+          core_id: string
+          created_at: string
+          event_type: string
+          id: string
+          metadata_json: Json
+          new_status: string | null
+          previous_status: string | null
+          shop_id: string
+        }
+        Insert: {
+          actor_member_id?: string | null
+          actor_type?: string
+          core_id: string
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata_json?: Json
+          new_status?: string | null
+          previous_status?: string | null
+          shop_id: string
+        }
+        Update: {
+          actor_member_id?: string | null
+          actor_type?: string
+          core_id?: string
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata_json?: Json
+          new_status?: string | null
+          previous_status?: string | null
+          shop_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "core_events_actor_member_id_fkey"
+            columns: ["actor_member_id"]
+            isOneToOne: false
+            referencedRelation: "shop_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_events_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "cores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_events_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "mechanic_cores_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "core_events_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cores: {
+        Row: {
+          condition_photo_url: string | null
+          created_at: string
+          created_by_member_id: string | null
+          credited_amount: number
+          current_status: string
+          customer_name: string | null
+          expected_core_amount: number
+          id: string
+          invoice_date: string | null
+          invoice_image_url: string | null
+          is_backroom_audit: boolean
+          is_ro_completed: boolean
+          original_box_intact: boolean
+          parent_core_id: string | null
+          part_cost: number
+          part_description: string | null
+          part_number: string
+          return_deadline: string | null
+          return_type: string
+          ro_number: string | null
+          shop_id: string
+          short_code: string
+          supplier_id: string
+          supplier_invoice_number: string
+          unit_sequence: number
+          updated_at: string
+          variance_amount: number | null
+          vehicle_description: string | null
+          vin: string | null
+          warranty_covers_labor: boolean
+          warranty_months: number
+        }
+        Insert: {
+          condition_photo_url?: string | null
+          created_at?: string
+          created_by_member_id?: string | null
+          credited_amount?: number
+          current_status?: string
+          customer_name?: string | null
+          expected_core_amount?: number
+          id?: string
+          invoice_date?: string | null
+          invoice_image_url?: string | null
+          is_backroom_audit?: boolean
+          is_ro_completed?: boolean
+          original_box_intact?: boolean
+          parent_core_id?: string | null
+          part_cost?: number
+          part_description?: string | null
+          part_number?: string
+          return_deadline?: string | null
+          return_type?: string
+          ro_number?: string | null
+          shop_id: string
+          short_code?: string
+          supplier_id: string
+          supplier_invoice_number?: string
+          unit_sequence?: number
+          updated_at?: string
+          variance_amount?: number | null
+          vehicle_description?: string | null
+          vin?: string | null
+          warranty_covers_labor?: boolean
+          warranty_months?: number
+        }
+        Update: {
+          condition_photo_url?: string | null
+          created_at?: string
+          created_by_member_id?: string | null
+          credited_amount?: number
+          current_status?: string
+          customer_name?: string | null
+          expected_core_amount?: number
+          id?: string
+          invoice_date?: string | null
+          invoice_image_url?: string | null
+          is_backroom_audit?: boolean
+          is_ro_completed?: boolean
+          original_box_intact?: boolean
+          parent_core_id?: string | null
+          part_cost?: number
+          part_description?: string | null
+          part_number?: string
+          return_deadline?: string | null
+          return_type?: string
+          ro_number?: string | null
+          shop_id?: string
+          short_code?: string
+          supplier_id?: string
+          supplier_invoice_number?: string
+          unit_sequence?: number
+          updated_at?: string
+          variance_amount?: number | null
+          vehicle_description?: string | null
+          vin?: string | null
+          warranty_covers_labor?: boolean
+          warranty_months?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cores_created_by_member_id_fkey"
+            columns: ["created_by_member_id"]
+            isOneToOne: false
+            referencedRelation: "shop_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cores_parent_core_id_fkey"
+            columns: ["parent_core_id"]
+            isOneToOne: false
+            referencedRelation: "cores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cores_parent_core_id_fkey"
+            columns: ["parent_core_id"]
+            isOneToOne: false
+            referencedRelation: "mechanic_cores_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cores_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cores_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_logs: {
+        Row: {
+          channel: string | null
+          dedupe_key: string | null
+          id: string
+          recipient: string | null
+          sent_at: string
+          shop_id: string
+        }
+        Insert: {
+          channel?: string | null
+          dedupe_key?: string | null
+          id?: string
+          recipient?: string | null
+          sent_at?: string
+          shop_id: string
+        }
+        Update: {
+          channel?: string | null
+          dedupe_key?: string | null
+          id?: string
+          recipient?: string | null
+          sent_at?: string
+          shop_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_logs_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_manifest_items: {
+        Row: {
+          core_id: string
+          id: string
+          manifest_id: string
+        }
+        Insert: {
+          core_id: string
+          id?: string
+          manifest_id: string
+        }
+        Update: {
+          core_id?: string
+          id?: string
+          manifest_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_manifest_items_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "cores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_manifest_items_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "mechanic_cores_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_manifest_items_manifest_id_fkey"
+            columns: ["manifest_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_manifests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_manifests: {
+        Row: {
+          created_at: string
+          created_by_member_id: string | null
+          driver_name: string | null
+          driver_truck_number: string | null
+          id: string
+          loadout_photo_url: string | null
+          manifest_pdf_url: string | null
+          shop_id: string
+          signature_url: string | null
+          supplier_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by_member_id?: string | null
+          driver_name?: string | null
+          driver_truck_number?: string | null
+          id?: string
+          loadout_photo_url?: string | null
+          manifest_pdf_url?: string | null
+          shop_id: string
+          signature_url?: string | null
+          supplier_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by_member_id?: string | null
+          driver_name?: string | null
+          driver_truck_number?: string | null
+          id?: string
+          loadout_photo_url?: string | null
+          manifest_pdf_url?: string | null
+          shop_id?: string
+          signature_url?: string | null
+          supplier_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_manifests_created_by_member_id_fkey"
+            columns: ["created_by_member_id"]
+            isOneToOne: false
+            referencedRelation: "shop_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_manifests_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_manifests_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      processed_webhook_events: {
+        Row: {
+          event_key: string
+          processed_at: string
+        }
+        Insert: {
+          event_key: string
+          processed_at?: string
+        }
+        Update: {
+          event_key?: string
+          processed_at?: string
+        }
+        Relationships: []
+      }
       shop_integrations: {
         Row: {
           alert_preference: string
@@ -232,6 +645,51 @@ export type Database = {
         }
         Relationships: []
       }
+      statement_lines: {
+        Row: {
+          credit_amount: number
+          id: string
+          invoice_ref: string | null
+          matched_status: string
+          part_number: string | null
+          shop_id: string
+          statement_id: string
+        }
+        Insert: {
+          credit_amount?: number
+          id?: string
+          invoice_ref?: string | null
+          matched_status?: string
+          part_number?: string | null
+          shop_id: string
+          statement_id: string
+        }
+        Update: {
+          credit_amount?: number
+          id?: string
+          invoice_ref?: string | null
+          matched_status?: string
+          part_number?: string | null
+          shop_id?: string
+          statement_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "statement_lines_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "statement_lines_statement_id_fkey"
+            columns: ["statement_id"]
+            isOneToOne: false
+            referencedRelation: "vendor_statements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       suppliers: {
         Row: {
           account_number: string | null
@@ -279,12 +737,185 @@ export type Database = {
           },
         ]
       }
+      vendor_statements: {
+        Row: {
+          created_at: string
+          id: string
+          shop_id: string
+          statement_date: string | null
+          statement_pdf_url: string | null
+          status: string
+          supplier_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          shop_id: string
+          statement_date?: string | null
+          statement_pdf_url?: string | null
+          status?: string
+          supplier_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          shop_id?: string
+          statement_date?: string | null
+          statement_pdf_url?: string | null
+          status?: string
+          supplier_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vendor_statements_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vendor_statements_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warranty_claims: {
+        Row: {
+          claim_pdf_url: string | null
+          core_id: string
+          created_at: string
+          created_by_member_id: string | null
+          failure_date: string | null
+          failure_reason: string | null
+          id: string
+          labor_hours_claimed: number
+          labor_rate_snapshot: number
+          shop_id: string
+          status: string
+          total_claim_amount: number
+        }
+        Insert: {
+          claim_pdf_url?: string | null
+          core_id: string
+          created_at?: string
+          created_by_member_id?: string | null
+          failure_date?: string | null
+          failure_reason?: string | null
+          id?: string
+          labor_hours_claimed?: number
+          labor_rate_snapshot?: number
+          shop_id: string
+          status?: string
+          total_claim_amount?: number
+        }
+        Update: {
+          claim_pdf_url?: string | null
+          core_id?: string
+          created_at?: string
+          created_by_member_id?: string | null
+          failure_date?: string | null
+          failure_reason?: string | null
+          id?: string
+          labor_hours_claimed?: number
+          labor_rate_snapshot?: number
+          shop_id?: string
+          status?: string
+          total_claim_amount?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warranty_claims_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "cores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warranty_claims_core_id_fkey"
+            columns: ["core_id"]
+            isOneToOne: false
+            referencedRelation: "mechanic_cores_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warranty_claims_created_by_member_id_fkey"
+            columns: ["created_by_member_id"]
+            isOneToOne: false
+            referencedRelation: "shop_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warranty_claims_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      mechanic_cores_view: {
+        Row: {
+          condition_photo_url: string | null
+          created_at: string | null
+          current_status: string | null
+          customer_name: string | null
+          id: string | null
+          invoice_date: string | null
+          is_backroom_audit: boolean | null
+          is_ro_completed: boolean | null
+          original_box_intact: boolean | null
+          part_description: string | null
+          part_number: string | null
+          return_deadline: string | null
+          return_type: string | null
+          ro_number: string | null
+          shop_id: string | null
+          short_code: string | null
+          supplier_id: string | null
+          supplier_invoice_number: string | null
+          supplier_name: string | null
+          unit_sequence: number | null
+          vehicle_description: string | null
+          vin: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cores_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cores_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       accept_pending_invites: { Args: never; Returns: string[] }
+      complete_driver_pickup: {
+        Args: {
+          p_actor_member_id?: string
+          p_core_ids: string[]
+          p_driver_name?: string
+          p_driver_truck_number?: string
+          p_loadout_photo_url?: string
+          p_shop_id: string
+          p_signature_url?: string
+          p_supplier_id: string
+        }
+        Returns: string
+      }
       create_shop_workspace: {
         Args: {
           owner_full_name: string
@@ -303,6 +934,16 @@ export type Database = {
         Returns: boolean
       }
       is_shop_member: { Args: { target_shop_id: string }; Returns: boolean }
+      mechanic_update_core_status: {
+        Args: {
+          p_actor_member_id?: string
+          p_condition_photo_url?: string
+          p_core_id: string
+          p_new_status: string
+          p_original_box_intact?: boolean
+        }
+        Returns: Json
+      }
       member_pin_status: {
         Args: { p_shop_id: string }
         Returns: {
